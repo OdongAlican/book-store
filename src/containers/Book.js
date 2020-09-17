@@ -1,8 +1,8 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 
-const Book = ({ book, handleRemoveBook }) => {
-    const dispatch = useDispatch()
+const Book = ({ book, handleRemove }) => {
+    // const dispatch = useDispatch()
     return (
               <tr>
                 <td>{book.id}</td>
@@ -10,7 +10,8 @@ const Book = ({ book, handleRemoveBook }) => {
                 <td>{book.category}</td>
                 <td>
                     <button onClick={
-                        ()=>dispatch(handleRemoveBook(book))
+                        // ()=>dispatch(handleRemoveBook(book))
+                        () => handleRemove(book)
                     }>Remove Book</button>
                 </td>
             </tr>

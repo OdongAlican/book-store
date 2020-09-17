@@ -4,9 +4,12 @@ import Book from '../containers/Book'
 import { deleteBook } from '../actions/index'
 // import { useSelector } from 'react-redux'
 
-const BooksList = ({ books }) => {
+const BooksList = ({ books, deleteBook }) => {
 
     // const books = useSelector( state  => state.booksReducer)
+    const handleRemoveBook = book => {
+        deleteBook(book)
+    }
 
     return(
         <div>
@@ -22,7 +25,7 @@ const BooksList = ({ books }) => {
                <tbody>
                    {
                        books.map( book => (
-                        <Book book = {book} key={book.id} handleRemoveBook = { deleteBook }/>
+                        <Book book = {book} key={book.id} handleRemove = { handleRemoveBook }/>
                        ))
                    }
                 </tbody> 
@@ -35,6 +38,12 @@ const mapStateToProps = state => ({
     books: state.booksReducer,
 })
 
-const BooksListConnect = connect(mapStateToProps, null)(BooksList)
+const mapDispatchToProps = dispatch => ({
+    deleteBook: book => {
+        dispatch(deleteBook(book))
+    }
+})
+
+const BooksListConnect = connect(mapStateToProps, mapDispatchToProps)(BooksList)
 
 export default BooksListConnect;
