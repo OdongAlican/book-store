@@ -29,8 +29,8 @@ const initialState = {
     title: 'Black Magic',
     category: 'Sci-fi',
   },
-]
-    
+],  
+  filter: 'All',
 }
 
 const store = createStore(

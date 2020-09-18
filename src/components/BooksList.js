@@ -1,18 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Book from '../containers/Book'
-import { deleteBook } from '../actions/index'
+import { deleteBook, changeFilter } from '../actions/index'
+import CategoryFilter from './CategoryFilter'
 // import { useSelector } from 'react-redux'
 
-const BooksList = ({ books, deleteBook }) => {
+const BooksList = ({ books, deleteBook, changeFilter, filter }) => {
 
     // const books = useSelector( state  => state.booksReducer)
     const handleRemoveBook = book => {
         deleteBook(book)
     }
 
+    const handleFilterChange = e => {
+        changeFilter(e.target.value);
+      };
+
     return(
         <div>
+            <CategoryFilter changeFilter={handleFilterChange}/>
             <table>
                 <thead>
                     <tr>
@@ -24,7 +30,7 @@ const BooksList = ({ books, deleteBook }) => {
                 </thead>
                <tbody>
                    {
-                       books.map( book => (
+                       books.filter(book => book.category === filter || filter === 'All').map( book => (
                         <Book book = {book} key={book.id} handleRemove = { handleRemoveBook }/>
                        ))
                    }
@@ -36,12 +42,16 @@ const BooksList = ({ books, deleteBook }) => {
 
 const mapStateToProps = state => ({
     books: state.booksReducer,
+    filter: state.filterReducer
 })
 
 const mapDispatchToProps = dispatch => ({
     deleteBook: book => {
         dispatch(deleteBook(book))
-    }
+    },
+    changeFilter: filter => {
+        dispatch(changeFilter(filter));
+      },
 })
 
 const BooksListConnect = connect(mapStateToProps, mapDispatchToProps)(BooksList)

@@ -11,3 +11,10 @@ export const deleteBook = (book) => {
         payload: book.id
     }
 }
+
+export const changeFilter = (filter) => {
+    return {
+        type: 'CHANGE_FILTER',
+        payload: filter
+    }
+}
